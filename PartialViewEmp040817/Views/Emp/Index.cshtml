@@ -1,0 +1,54 @@
+﻿
+@model IEnumerable<PartialViewEmp040817.Models.EmployeeModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div>
+    <h2>Partial view</h2>
+    @*@{ Html.RenderPartial("EmpDisplay", Model);}
+    @{ 
+        MvcHtmlString res = Html.Partial("EmpDisplay", Model);
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        sb.Append(res + "<h2> Partial view </h2>");
+    }
+    @Html.Raw(sb.ToString())
+
+    @{ Html.RenderAction("GetEmployees","Emp");}*@
+
+
+</div>
+<script src="~/jquery-3.2.1.js">
+
+</script>
+<script type="text/javascript">
+    debugger;
+    $(document).ready(function () {
+        $('#btn1').click(function () {
+            $.ajax({
+                url: '@Url.Action("GetEmployees", "Emp")',
+                type: "GET",
+                contentType: "",
+                success:function(data){
+                    $('#Container').html(data);
+
+                },
+                //error: function (jqxhr, error, returnerror) {
+                //    alert('Error');
+                //}
+
+                error: function () {
+                    alert('Error');
+                }
+            })
+        });
+
+    });
+</script>
+<input type="button" id="btn1" value="Button"/>
+<div id="Container">
+   
+
+</div>
